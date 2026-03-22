@@ -1,0 +1,23 @@
+# JARVIS FASE 2B - INTEGRACIONES AVANZADAS
+
+# GitHub Integration
+PyGithub==2.1.1
+
+# Slack Integration
+slack-sdk==3.23.0
+
+# Email Integration
+secure-smtplib==0.1.1
+
+# Spotify Integration
+spotipy==2.22.1
+
+# Weather & News
+requests==2.31.0
+
+# Biometric & Security
+cryptography==41.0.7
+
+# General
+python-dotenv==1.0.0
+logging-config==1.0.0
