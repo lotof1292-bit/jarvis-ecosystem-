@@ -1,0 +1,42 @@
+{
+  "name": "jarvis-ecosystem",
+  "version": "6.0.0",
+  "description": "Ecosistema Jarvis - Asistente autónomo local sin límites de tokens",
+  "main": "server/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "start": "node dist/index.js",
+    "preview": "vite preview --host",
+    "install:all": "npm install && pip install -r requirements.txt",
+    "setup:ollama": "echo 'Descarga Ollama desde https://ollama.com y ejecuta: ollama serve'",
+    "setup:interpreter": "pip install open-interpreter",
+    "start:jarvis": "interpreter --local"
+  },
+  "keywords": [
+    "jarvis",
+    "ai",
+    "local",
+    "ollama",
+    "open-interpreter",
+    "chat",
+    "assistant"
+  ],
+  "author": "Lotof (lotof1292-bit)",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "wouter": "^3.3.5",
+    "tailwindcss": "^4.1.14",
+    "shadcn-ui": "^0.0.4"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "^5.6.3",
+    "tailwindcss": "^4.1.14",
+    "@tailwindcss/vite": "^4.1.3"
+  }
+}
