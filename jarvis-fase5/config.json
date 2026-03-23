@@ -1,0 +1,392 @@
+{
+  "system": {
+    "name": "JARVIS",
+    "version": "5.0.0",
+    "environment": "production",
+    "debug": false,
+    "log_level": "INFO",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "language": "es"
+  },
+
+  "security": {
+    "encryption": {
+      "enabled": true,
+      "algorithm": "AES-256",
+      "key_rotation_days": 90
+    },
+    "authentication": {
+      "require_password": true,
+      "password_min_length": 12,
+      "mfa_enabled": true,
+      "session_timeout_minutes": 30
+    },
+    "permissions": {
+      "allow_file_access": true,
+      "allow_system_commands": true,
+      "allow_network_access": true,
+      "allow_device_control": true,
+      "restricted_paths": [
+        "/root",
+        "/etc/shadow",
+        "/sys"
+      ],
+      "restricted_commands": [
+        "rm -rf /",
+        "dd if=/dev/zero",
+        ":(){ :|:& };:"
+      ]
+    }
+  },
+
+  "apis": {
+    "tailscale": {
+      "enabled": true,
+      "api_key": "${TAILSCALE_API_KEY}",
+      "auth_key": "${TAILSCALE_AUTH_KEY}",
+      "network_prefix": "100.64.0.0/10",
+      "auto_connect": true,
+      "timeout_seconds": 30
+    },
+    "openai": {
+      "enabled": true,
+      "api_key": "${OPENAI_API_KEY}",
+      "model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 2000,
+      "timeout_seconds": 30
+    },
+    "github": {
+      "enabled": true,
+      "api_key": "${GITHUB_API_KEY}",
+      "username": "${GITHUB_USERNAME}",
+      "timeout_seconds": 30
+    },
+    "spotify": {
+      "enabled": true,
+      "client_id": "${SPOTIFY_CLIENT_ID}",
+      "client_secret": "${SPOTIFY_CLIENT_SECRET}",
+      "timeout_seconds": 30
+    },
+    "slack": {
+      "enabled": false,
+      "webhook_url": "${SLACK_WEBHOOK_URL}",
+      "channel": "#jarvis",
+      "timeout_seconds": 30
+    },
+    "weather": {
+      "enabled": true,
+      "api_key": "${WEATHER_API_KEY}",
+      "provider": "openweathermap",
+      "units": "metric",
+      "timeout_seconds": 30
+    },
+    "google_maps": {
+      "enabled": true,
+      "api_key": "${GOOGLE_MAPS_API_KEY}",
+      "timeout_seconds": 30
+    },
+    "twilio": {
+      "enabled": false,
+      "account_sid": "${TWILIO_ACCOUNT_SID}",
+      "auth_token": "${TWILIO_AUTH_TOKEN}",
+      "phone_number": "+1234567890",
+      "timeout_seconds": 30
+    }
+  },
+
+  "email": {
+    "enabled": true,
+    "smtp": {
+      "server": "smtp.gmail.com",
+      "port": 587,
+      "use_tls": true,
+      "timeout_seconds": 30
+    },
+    "account": {
+      "email": "${EMAIL_ADDRESS}",
+      "password": "${EMAIL_PASSWORD}",
+      "display_name": "JARVIS"
+    },
+    "notifications": {
+      "enabled": true,
+      "send_on_error": true,
+      "send_on_warning": false,
+      "send_on_success": false,
+      "recipients": [
+        "${ADMIN_EMAIL}"
+      ]
+    },
+    "templates": {
+      "error_subject": "🚨 JARVIS - Error Detectado",
+      "warning_subject": "⚠️ JARVIS - Advertencia",
+      "success_subject": "✅ JARVIS - Operación Exitosa"
+    }
+  },
+
+  "personality": {
+    "name": "JARVIS",
+    "role": "Asistente de Control Remoto Inteligente",
+    "description": "Sistema de automatización y control remoto basado en IA",
+    "avatar": "🤖",
+    "tone": "professional",
+    "language_style": "formal",
+    "response_style": "concise",
+    "humor_level": 0.3,
+    "formality_level": 0.8,
+    "technical_level": 0.9,
+    "traits": [
+      "Eficiente",
+      "Confiable",
+      "Inteligente",
+      "Proactivo",
+      "Seguro"
+    ],
+    "catchphrases": [
+      "A su servicio",
+      "Procesando...",
+      "Completado exitosamente",
+      "¿Hay algo más que necesite?"
+    ]
+  },
+
+  "interaction_modes": {
+    "default": "professional",
+    "modes": {
+      "professional": {
+        "tone": "formal",
+        "language": "técnico",
+        "response_length": "concise",
+        "emoji_usage": "minimal",
+        "greeting": "Buenos días. ¿Cómo puedo asistirle?",
+        "farewell": "Hasta luego. Quedo atento a sus necesidades."
+      },
+      "casual": {
+        "tone": "friendly",
+        "language": "coloquial",
+        "response_length": "normal",
+        "emoji_usage": "moderate",
+        "greeting": "¡Hola! ¿Qué necesitas?",
+        "farewell": "¡Nos vemos! 👋"
+      },
+      "technical": {
+        "tone": "technical",
+        "language": "especializado",
+        "response_length": "detailed",
+        "emoji_usage": "minimal",
+        "greeting": "Sistema listo. Esperando comandos.",
+        "farewell": "Sesión finalizada."
+      },
+      "developer": {
+        "tone": "direct",
+        "language": "código",
+        "response_length": "verbose",
+        "emoji_usage": "none",
+        "greeting": "Dev mode activated",
+        "farewell": "Disconnecting..."
+      }
+    }
+  },
+
+  "rules": {
+    "general": {
+      "max_command_length": 1000,
+      "max_response_length": 5000,
+      "command_timeout_seconds": 60,
+      "rate_limit_per_minute": 100,
+      "allow_concurrent_commands": true,
+      "max_concurrent_commands": 5
+    },
+    "device_control": {
+      "require_confirmation": true,
+      "confirmation_timeout_seconds": 30,
+      "allow_bulk_operations": true,
+      "max_devices_per_operation": 10,
+      "dangerous_commands_require_password": true
+    },
+    "file_operations": {
+      "allow_read": true,
+      "allow_write": true,
+      "allow_delete": false,
+      "allow_execute": false,
+      "max_file_size_mb": 100,
+      "allowed_extensions": [
+        ".txt",
+        ".json",
+        ".py",
+        ".sh",
+        ".log"
+      ]
+    },
+    "network": {
+      "allow_port_scanning": false,
+      "allow_external_requests": true,
+      "allow_internal_network_access": true,
+      "blocked_ips": [],
+      "blocked_domains": [
+        "malicious-site.com"
+      ]
+    },
+    "learning": {
+      "enabled": true,
+      "learn_from_interactions": true,
+      "learn_from_errors": true,
+      "learn_from_user_feedback": true,
+      "max_patterns_to_learn": 1000,
+      "pattern_retention_days": 90
+    }
+  },
+
+  "behavior": {
+    "proactive_actions": {
+      "enabled": true,
+      "monitor_system_health": true,
+      "suggest_optimizations": true,
+      "predict_issues": true,
+      "send_daily_summary": true,
+      "summary_time": "09:00"
+    },
+    "error_handling": {
+      "retry_on_failure": true,
+      "max_retries": 3,
+      "retry_delay_seconds": 5,
+      "log_errors": true,
+      "notify_on_critical_error": true
+    },
+    "automation": {
+      "enable_scheduled_tasks": true,
+      "enable_event_triggers": true,
+      "enable_conditional_actions": true,
+      "max_active_automations": 50
+    },
+    "learning_preferences": {
+      "learn_user_preferences": true,
+      "learn_command_patterns": true,
+      "learn_time_patterns": true,
+      "learn_device_patterns": true,
+      "adaptation_speed": "medium"
+    }
+  },
+
+  "communication": {
+    "channels": {
+      "chat": {
+        "enabled": true,
+        "response_time_ms": 1000,
+        "typing_indicator": true
+      },
+      "voice": {
+        "enabled": true,
+        "language": "es-ES",
+        "voice_speed": 1.0,
+        "voice_gender": "male"
+      },
+      "notifications": {
+        "enabled": true,
+        "sound": true,
+        "vibration": true,
+        "led": true
+      }
+    },
+    "language": {
+      "primary": "es",
+      "secondary": "en",
+      "auto_translate": true,
+      "translation_service": "google_translate"
+    }
+  },
+
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "track_commands": true,
+      "track_errors": true,
+      "track_performance": true,
+      "track_user_behavior": true
+    },
+    "alerts": {
+      "high_cpu_threshold": 80,
+      "high_memory_threshold": 85,
+      "high_disk_threshold": 90,
+      "network_latency_threshold_ms": 500,
+      "error_rate_threshold": 5
+    },
+    "logging": {
+      "enabled": true,
+      "log_file": "logs/jarvis.log",
+      "max_log_size_mb": 100,
+      "retention_days": 30,
+      "log_level": "INFO"
+    }
+  },
+
+  "integrations": {
+    "home_automation": {
+      "enabled": true,
+      "platforms": [
+        "smart_lights",
+        "smart_plugs",
+        "smart_tv",
+        "smart_thermostat"
+      ]
+    },
+    "calendar": {
+      "enabled": true,
+      "provider": "google_calendar",
+      "sync_interval_minutes": 15
+    },
+    "task_management": {
+      "enabled": true,
+      "provider": "todoist",
+      "sync_interval_minutes": 30
+    },
+    "music_streaming": {
+      "enabled": true,
+      "provider": "spotify",
+      "auto_play": false
+    }
+  },
+
+  "performance": {
+    "cache": {
+      "enabled": true,
+      "ttl_seconds": 3600,
+      "max_size_mb": 500
+    },
+    "optimization": {
+      "compress_responses": true,
+      "minify_json": true,
+      "parallel_processing": true,
+      "async_operations": true
+    },
+    "resource_limits": {
+      "max_memory_mb": 512,
+      "max_cpu_percent": 80,
+      "max_disk_usage_percent": 90
+    }
+  },
+
+  "development": {
+    "debug": false,
+    "verbose_logging": false,
+    "test_mode": false,
+    "mock_external_apis": false,
+    "profiling_enabled": false
+  },
+
+  "backup": {
+    "enabled": true,
+    "backup_interval_hours": 24,
+    "backup_location": "/backups/jarvis",
+    "retention_days": 30,
+    "compress": true
+  },
+
+  "updates": {
+    "auto_update": true,
+    "check_interval_hours": 24,
+    "update_time": "03:00",
+    "notify_before_update": true,
+    "notification_minutes_before": 60
+  }
+}
